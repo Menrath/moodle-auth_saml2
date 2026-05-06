@@ -48,3 +48,47 @@ function auth_saml2_status_checks(): array {
     }
     return [];
 }
+
+/**
+ * Serve the files from the auth_saml2 file areas.
+ *
+ * @param stdClass $course the course object
+ * @param stdClass $cm the course module object
+ * @param stdClass $context the context
+ * @param string $filearea the name of the file area
+ * @param array $args extra arguments (itemid, path)
+ * @param bool $forcedownload whether or not force download
+ * @param array $options additional options affecting the file serving
+ * @return bool|void false if the file not found, just send the file otherwise and do not return anything
+ */
+function auth_saml2_pluginfile(
+    $course,
+    $cm,
+    $context,
+    string $filearea,
+    array $args,
+    bool $forcedownload,
+    array $options = []
+) {
+    global $DB;
+
+    if ($context->contextlevel != CONTEXT_SYSTEM) {
+        return false;
+    }
+    if ($filearea !== \auth_saml2\local\idp_logo_cache::FILEAREA) {
+        return false;
+    }
+
+    $itemid = array_shift($args);
+    $filename = array_pop($args);
+    $filepath = \auth_saml2\local\idp_logo_cache::FILEPATH;
+    $component = \auth_saml2\local\idp_logo_cache::COMPONENT;
+
+    $fs = get_file_storage();
+    $file = $fs->get_file($context->id, $component, $filearea, $itemid, $filepath, $filename);
+    if (!$file) {
+        return false;
+    }
+
+    send_stored_file($file, DAYSECS, 0, $forcedownload, $options);
+}
