@@ -362,6 +362,24 @@ urn:mace:dir:attribute-def:mail *</pre>"]),
         PARAM_TEXT
     ));
 
+    // Requirements Signaling for Subject Identifiers.
+    $settings->add(new admin_setting_configselect(
+        'auth_saml2/subjectidentifierrequirements',
+        get_string('subjectidentifierrequirements', 'auth_saml2'),
+        get_string(
+            'subjectidentifierrequirements_help',
+            'auth_saml2',
+            'https://docs.oasis-open.org/security/saml-subject-id-attr/v1.0/cs01/saml-subject-id-attr-v1.0-cs01.html'
+        ),
+        'none',
+        [
+            'subject-id' => 'subject-id',
+            'pairwise-id' => 'pairwise-id',
+            'none' => 'none',
+            'any' => 'any',
+        ]
+    ));
+
     // Autocreate Users.
     $settings->add(new admin_setting_configselect(
         'auth_saml2/autocreate',

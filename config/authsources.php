@@ -108,3 +108,28 @@ if ($saml2auth->config->nameidasattrib) {
         ],
     ];
 }
+
+if (\in_array($saml2auth->config->subjectidentifierrequirements, ['subject-id', 'pairwise-id', 'any'], true)) {
+    $config[$saml2auth->spname]['EntityAttributes'] = [
+        'urn:oasis:names:tc:SAML:profiles:subject-id:req' => [$saml2auth->config->subjectidentifierrequirements],
+    ];
+
+    if ($saml2auth->config->subjectidentifierrequirements === 'subject-id'
+        && !\in_array('urn:oasis:names:tc:SAML:attribute:subject-id', $config[$saml2auth->spname]['attributes.required'], true)) {
+        $config[$saml2auth->spname]['attributes.required'][] = 'urn:oasis:names:tc:SAML:attribute:subject-id';
+    }
+
+    if ($saml2auth->config->subjectidentifierrequirements === 'pairwise-id'
+        && !\in_array('urn:oasis:names:tc:SAML:attribute:pairwise-id', $config[$saml2auth->spname]['attributes.required'], true)) {
+        $config[$saml2auth->spname]['attributes.required'][] = 'urn:oasis:names:tc:SAML:attribute:pairwise-id';
+    }
+
+    if ($saml2auth->config->subjectidentifierrequirements === 'any') {
+        if (!\in_array('urn:oasis:names:tc:SAML:attribute:pairwise-id', $config[$saml2auth->spname]['attributes'], true)) {
+            $config[$saml2auth->spname]['attributes'][] = 'urn:oasis:names:tc:SAML:attribute:pairwise-id';
+        }
+        if (!\in_array('urn:oasis:names:tc:SAML:attribute:subject-id', $config[$saml2auth->spname]['attributes'], true)) {
+            $config[$saml2auth->spname]['attributes'][] = 'urn:oasis:names:tc:SAML:attribute:subject-id';
+        }
+    }
+}
