@@ -133,3 +133,21 @@ if (\in_array($saml2auth->config->subjectidentifierrequirements, ['subject-id', 
         }
     }
 }
+
+if ($saml2auth->config->refedscodeofconduct === '1') {
+    $sp = $saml2auth->spname;
+
+    if (!isset($config[$sp]['EntityAttributes'])) {
+        $config[$sp]['EntityAttributes'] = [];
+    }
+
+    if (!isset($config[$sp]['EntityAttributes']['https://macedir.org/entity-category'])) {
+        $config[$sp]['EntityAttributes']['https://macedir.org/entity-category'] = [];
+    }
+
+    $config[$sp]['EntityAttributes']['https://macedir.org/entity-category'][] =
+        'https://refeds.org/category/code-of-conduct/v2';
+
+    $config[$sp]['EntityAttributes']['https://macedir.org/entity-category'][] =
+        'http://www.geant.net/uri/dataprotection-code-of-conduct/v1';
+}
