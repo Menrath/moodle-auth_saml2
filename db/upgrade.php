@@ -414,7 +414,7 @@ function xmldb_auth_saml2_upgrade($oldversion) {
         $idps = $DB->get_records('auth_saml2_idps');
         foreach ($idps as $idp) {
             if (!empty($idp->logo)) {
-                idp_logo_cache::cache_logo($idp->logo, $idp->id);
+                idp_logo_cache::cache_logo($idp->logo, (int) $idp->id);
             }
         }
 
