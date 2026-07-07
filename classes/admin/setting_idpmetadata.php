@@ -172,7 +172,7 @@ class setting_idpmetadata extends admin_setting_configtextarea {
 
             if (!empty($logo) && $oldidp->logo !== $logo) {
                 idp_logo_cache::delete_cached_logo($oldidp->id);
-                idp_logo_cache::cache_logo($logo, $oldidp->id);
+                // idp_logo_cache::cache_logo($logo, $oldidp->id);
             }
 
             // Remove the idp from the current array so that we don't delete it later.
@@ -190,7 +190,7 @@ class setting_idpmetadata extends admin_setting_configtextarea {
             $idpid = $DB->insert_record('auth_saml2_idps', $newidp);
 
             if ($idpid) {
-                idp_logo_cache::cache_logo($logo, $idpid);
+                // idp_logo_cache::cache_logo($logo, $idpid);
             }
         }
     }
