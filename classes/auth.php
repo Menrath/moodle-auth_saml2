@@ -299,7 +299,7 @@ class auth extends \auth_plugin_base {
             $idpicon = null;
             $idpiconurl = idp_logo_cache::get_cached_logo($idp);
             if (!$idpiconurl) {
-                $idpicon = new pix_icon('i/user', 'Login');
+                $idpicon = new pix_icon('i/empty', 'This institution has no logo.');
             }
 
             // Initially use the default name. This is suitable for a single IdP.
