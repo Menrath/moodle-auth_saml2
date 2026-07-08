@@ -409,9 +409,9 @@ function xmldb_auth_saml2_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2023100300, 'auth', 'saml2');
     }
 
-     if ($oldversion < 2025040402) {
+    if ($oldversion < 2025040402) {
         // Cache the idps logos.
-        $idps = $DB->get_records('auth_saml2_idps');
+        $idps = $DB->get_records('auth_saml2_idps', ['activeidp' => 1]);
         foreach ($idps as $idp) {
             if (!empty($idp->logo)) {
                 idp_logo_cache::cache_logo($idp->logo, (int) $idp->id);
