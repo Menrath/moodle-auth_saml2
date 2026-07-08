@@ -20,6 +20,7 @@ use admin_setting_configtextarea;
 use auth_saml2\idp_data;
 use auth_saml2\idp_parser;
 use auth_saml2\local\idp_logo_cache;
+use auth_saml2\local\metadata_signature;
 use DOMDocument;
 use DOMElement;
 use DOMNodeList;
@@ -170,11 +171,6 @@ class setting_idpmetadata extends admin_setting_configtextarea {
                 $DB->set_field('auth_saml2_idps', 'defaultname', $idpname, ['id' => $oldidp->id]);
             }
 
-            if (!empty($logo) && $oldidp->logo !== $logo) {
-                idp_logo_cache::delete_cached_logo($oldidp->id);
-                // idp_logo_cache::cache_logo($logo, $oldidp->id);
-            }
-
             // Remove the idp from the current array so that we don't delete it later.
             unset($oldidps[$idp->idpurl][$entityid]);
         } else {
@@ -187,11 +183,7 @@ class setting_idpmetadata extends admin_setting_configtextarea {
             $newidp->defaultname = $idpname;
             $newidp->logo = $logo;
 
-            $idpid = $DB->insert_record('auth_saml2_idps', $newidp);
-
-            if ($idpid) {
-                // idp_logo_cache::cache_logo($logo, $idpid);
-            }
+            $DB->insert_record('auth_saml2_idps', $newidp);
         }
     }
 
@@ -237,7 +229,13 @@ class setting_idpmetadata extends admin_setting_configtextarea {
                     get_string('idpmetadata_badurl', 'auth_saml2', $idp->idpurl)
                 );
             }
-            $idp->set_rawxml($rawxml);
+
+            // Temporary: Require because we do not want to push version in version.php to refresh autoloader now.
+            require_once(__DIR__ . '/../local/metadata_signature.php');
+            $valid = metadata_signature::validate($idp->idpurl, $rawxml);
+            if ($valid) {
+                $idp->set_rawxml($rawxml);
+            }
         }
 
         return $idps;
