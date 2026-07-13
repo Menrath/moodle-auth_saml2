@@ -26,15 +26,27 @@ use auth_saml2\ssl_algorithms;
 
 defined('MOODLE_INTERNAL') || die();
 
-global $CFG, $saml2auth, $saml2config;
+global $CFG, $saml2auth, $saml2config, $SESSION;
 
 $metadatasources = [];
-foreach ($saml2auth->metadataentities as $idpentity) {
+
+// If we have a specific IdP selected for this request, ONLY load that one's metadata.
+if (!empty($SESSION->saml2idp) && isset($saml2auth->metadataentities[$SESSION->saml2idp])) {
+    $idpentity = $saml2auth->metadataentities[$SESSION->saml2idp];
     $metadataurlhash = md5($idpentity->metadataurl);
     $metadatasources[$metadataurlhash] = [
         'type' => 'xml',
         'file' => "$CFG->dataroot/saml2/" . $metadataurlhash . ".idp.xml",
     ];
+} else {
+    // Fallback: load all active IdP metadata files (for IdP-initiated login or discovery).
+    foreach ($saml2auth->metadataentities as $idpentity) {
+        $metadataurlhash = md5($idpentity->metadataurl);
+        $metadatasources[$metadataurlhash] = [
+            'type' => 'xml',
+            'file' => "$CFG->dataroot/saml2/" . $metadataurlhash . ".idp.xml",
+        ];
+    }
 }
 
 $remoteip = getremoteaddr();
