@@ -15,18 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
+ * External functions for auth saml2.
  *
- * @package    auth_saml2
- * @copyright  Brendan Heywood <brendan@catalyst-au.net>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright University of Graz 2026
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026040205;    // The current plugin version (Date: YYYYMMDDXX).
-$plugin->release   = 2026040202;    // Match release exactly to version.
-$plugin->requires  = 2025040400;    // Requires Moodle 5.0
-$plugin->component = 'auth_saml2';  // Full name of the plugin (used for diagnostics).
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->supported = [500, 501];     // A range of branch numbers of supported moodle versions.
+$functions = [
+    'auth_saml2_manage_idp' => [
+        'classname'    => auth_saml2\external\manage_idp::class,
+        'methodname'   => 'execute',
+        'classpath'    => 'auth/saml2/classes/external/manage_idps.php',
+        'description'  => 'Update a single or multiple of the IdP (displayname, active, defaultidp).',
+        'type'         => 'write',
+        'ajax'         => true,
+        'capabilities' => 'moodle/site:config',
+    ],
+];
+
+$services = [];

@@ -22,8 +22,10 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['activateidp'] = 'Activate Identity Provider';
 $string['allowcreate'] = 'Allow create';
 $string['allowcreate_help'] = 'Allow creation of IdP users on demand';
+$string['allowlistenabled'] = 'Allow list enabled';
 $string['alterlogout'] = 'Alternative Logout URL';
 $string['alterlogout_help'] = 'The URL to redirect a user after all internal logout mechanisms are run';
 $string['anyauth'] = 'Allowed any auth type';
@@ -65,7 +67,6 @@ $string['certificatedetails'] = 'Certificate details';
 $string['certificatedetailshelp'] = '<h1>SAML2 auto generated public certificate contents</h1><p>The path for the cert is here:</p>';
 $string['certificatelock'] = 'Lock certificate';
 $string['certificatelock_help'] = 'Locking the certificates will prevent them from being overwritten once generated.';
-$string['certificatelock_locked'] = 'The certificate is locked';
 $string['certificatelock_lockedmessage'] = 'The certificates are currently locked.';
 $string['certificatelock_regenerate'] = 'Not regenerating certificates because they have been locked!';
 $string['certificatelock_unlock'] = 'Unlock certificates';
@@ -76,6 +77,7 @@ $string['checkcertificateok'] = 'SAML certificate will expire in {$a}';
 $string['checkcertificatewarn'] = 'SAML certificate will expire in {$a}';
 $string['commonname'] = 'Common Name';
 $string['countryname'] = 'Country';
+$string['deactivateidp'] = 'Deactivate Identity Provider';
 $string['debug'] = 'Debugging';
 $string['debug_help'] = '<p>This adds extra debugging to the normal moodle log | <a href=\'{$a}\'>View SSP config</a></p>';
 $string['duallogin'] = 'Dual login';
@@ -85,6 +87,7 @@ $string['duallogin_help'] = '
 <p>If off, then admins can still see the manual login page via /login/index.php?saml=off</p>
 <p>If on, then external pages can deep link into moodle using saml eg /course/view.php?id=45&saml=on</p>
 <p>If set to test IdP connection, the network will be checked for connectivity, and if functional, SAML login will be initiated.</p>';
+$string['editidp'] = 'Edit Identity Provider';
 $string['emailtaken'] = 'Can\'t create a new account, because {$a} email address is already registered';
 $string['emailtakenupdate'] = 'Your email wasn\'t updated, because email address {$a} is already registered';
 $string['error'] = 'Login error';
@@ -122,7 +125,6 @@ $string['idpmetadata'] = 'IdP metadata xml OR public xml URL';
 $string['idpmetadata_badurl'] = 'Invalid metadata at {$a}';
 $string['idpmetadata_help'] = 'To use multiple IdPs enter each public metadata url on a new line.<br/>To override a name, place text before the http. eg. "Forced IdP Name http://ssp.local/simplesaml/saml2/idp/metadata.php"';
 $string['idpmetadata_invalid'] = 'The IdP XML isn\'t valid';
-$string['idpmetadata_noentityid'] = 'The IdP XML has no entityID';
 $string['idpmetadatarefresh'] = 'IdP metadata refresh';
 $string['idpmetadatarefresh_help'] = 'Run a scheduled task to update IdP metadata from IdP metadata URL';
 $string['idpname'] = 'IdP label override';
@@ -136,12 +138,14 @@ $string['logdir_help'] = 'The log directory SSPHP will write to, the file will b
 $string['logdirdefault'] = '/tmp/';
 $string['logtofile'] = 'Enable logging to file';
 $string['logtofile_help'] = 'Turning this on will redirect SSPHP log output to a file in the logdir';
+$string['manageidps'] = 'Manage IdPs';
 $string['manageidpsheading'] = 'Manage available Identity Providers (IdPs)';
 $string['mdlattr'] = 'Mapping Moodle';
 $string['mdlattr_help'] = 'Which Moodle user field should the IdP attribute be matched to?';
 $string['metadatafetchfailed'] = 'Metadata fetch failed: {$a}';
 $string['metadatafetchfailedstatus'] = 'Metadata fetch failed: Status code {$a}';
 $string['metadatafetchfailedunknown'] = 'Metadata fetch failed: Unknown cURL error';
+$string['metadataurl'] = 'Metadata URL';
 $string['moodleidpdescription'] = 'Settings for Moodle as an Identity Provider for other services.';
 $string['moodleidpenabled'] = 'Enable IDP';
 $string['moodleidpenabled_error'] = 'Moodle IDP is not enabled. Check Settings.';
@@ -187,7 +191,6 @@ $string['organizationalunitname'] = 'Organisational Unit';
 $string['organizationname'] = 'Organisation';
 $string['passivemode'] = 'Passive mode';
 $string['phone1'] = 'Phone';
-$string['phone2'] = 'Mobile phone';
 $string['plugindisabled'] = 'SAML2 authentication plugin is disabled';
 $string['pluginname'] = 'SAML2';
 $string['privatekeypass'] = 'Private certificate key password';
@@ -262,7 +265,6 @@ $string['sha512'] = 'SHA512';
 $string['signaturealgorithm'] = 'Signing Algorithm';
 $string['signaturealgorithm_help'] = 'This is the algorithm that will be used to sign SAML requests. Warning: The SHA1 Algorithm is only provided for backwards compatibility, unless you absolutely must use it it is recommended to avoid it and use at least SHA256 instead.';
 $string['selectloginservice'] = 'Select a login service';
-$string['regenerateheader'] = 'Regenerate Private Key and Certificate';
 $string['regeneratewarning'] = 'Warning! Generating a new certificate will overwrite the current one and you may need to update your IDP';
 $string['regeneratepath'] = 'Certificate path path: {$a}';
 $string['regenerateheader'] = 'Regenerate Private Key and Certificate';
